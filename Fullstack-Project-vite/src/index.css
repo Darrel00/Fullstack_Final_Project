@@ -55,6 +55,7 @@ body {
 .stroke-width-section {
     display: flex;
     align-items: center;
+    gap: 10px;
 }
 
 .stroke-width-section button {

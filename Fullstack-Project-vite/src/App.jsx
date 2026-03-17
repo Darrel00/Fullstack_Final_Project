@@ -92,15 +92,16 @@ function Challenge() {
             <div className="background">
                 <section className="drawing-section">
                   <div ref={toolbarRef}>
-                    <label htmlFor="stroke">Stroke</label>
                     <button onClick={handleSave}>
                         Save as Image
                     </button>
+                    <label htmlFor="title">Colour</label>
                     <input id="stroke" name="stroke" type="color"/>
                     <div className="stroke-width-section">
+                        <label htmlFor="title">Stroke</label>
                         <button id="lineWidth" name='lineWidth'></button>
                     </div>
-                    <button id="clear">Clear</button>
+                    <button id="clear">Clear Image</button>
                   </div>
                   <div className="drawing-board">
                     <canvas ref={canvasRef} id="drawing-board"></canvas>
