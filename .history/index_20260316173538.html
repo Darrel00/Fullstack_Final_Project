@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <section className="drawing-section">
+                  <div ref={toolbarRef}>
+                    <label htmlFor="stroke">Stroke</label>
+                    <button onClick={handleSave}>
+                        Save as Image
+                    </button>
+                    <input id="stroke" name="stroke" type="color"/>
+                    <div className="stroke-width-section">
+                        <button id="lineWidth" name='lineWidth' onClick={() => setShowWidthMenu(prev => !prev)}>Change Width</button>
+
+                        {showWidthMenu && (
+                            <div className="menu">
+
+                            {strokeWidths.map(({ label, value }) => (
+                                <div
+                                    key={value}
+                                    onClick={() => handleWidthSelect(value)}
+                                    className="map"
+                                    >
+                                <div className="stroke"/>
+                                {label} ({value}px)
+                                </div>
+                            ))}
+                            </div>
+                        )}
+                    </div>
+                    <button id="clear">Clear</button>
+                  </div>
+                  <div className="drawing-board">
+                    <canvas ref={canvasRef} id="drawing-board"></canvas>
+                  </div>
+                </section>
+</body>
+</html>
