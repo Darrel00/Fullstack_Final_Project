@@ -62,6 +62,9 @@ function Challenge() {
 
         canvas.addEventListener('mousedown', (e) => {
             isPaintingRef.current = true;
+            const rect = canvas.getBoundingClientRect();
+            ctx.beginPath();
+            ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
         });
 
         canvas.addEventListener('mouseup', e => {
