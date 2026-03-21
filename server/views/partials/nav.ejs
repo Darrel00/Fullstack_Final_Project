@@ -1,0 +1,23 @@
+<header class="topbar">
+  <div class="topbar__inner">
+    <a class="brand" href="/draw">Curated</a>
+    <nav class="nav">
+      <a href="/draw">Draw</a>
+      <a href="/gallery">Gallery</a>
+      <% if (currentUser) { %>
+        <span class="nav__user"><%= currentUser.email %></span>
+        <form method="post" action="/auth/logout" class="nav__logout">
+          <button type="submit">Log out</button>
+        </form>
+      <% } else { %>
+        <a href="/auth/signin">Sign in</a>
+        <a class="btn" href="/auth/signup">Sign up</a>
+      <% } %>
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  <% if (flash) { %>
+    <div class="flash flash--<%= flash.type %>"><%= flash.message %></div>
+  <% } %>

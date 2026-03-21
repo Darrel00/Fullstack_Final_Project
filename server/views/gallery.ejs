@@ -1,0 +1,36 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav') %>
+
+<section class="page">
+  <div class="page__header">
+    <h1>Gallery</h1>
+    <p class="muted">Published drawings from signed-in users.</p>
+  </div>
+
+  <% if (!drawings.length) { %>
+    <div class="card">
+      <p class="muted">No drawings yet. Go to <a href="/draw">Draw</a> and publish one.</p>
+    </div>
+  <% } else { %>
+    <div class="grid">
+      <% drawings.forEach(d => { %>
+        <article class="tile">
+          <a href="<%= d.url %>" target="_blank" rel="noreferrer">
+            <img src="<%= d.url %>" alt="<%= d.caption || 'Drawing' %>" loading="lazy" />
+          </a>
+          <div class="tile__meta">
+            <div class="tile__title"><%= d.caption || 'Untitled' %></div>
+            <div class="tile__sub muted small">
+              <span><%= d.authorEmail %></span>
+              <span>·</span>
+              <time datetime="<%= d.createdAt %>"><%= new Date(d.createdAt).toLocaleString() %></time>
+            </div>
+          </div>
+        </article>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+
+<%- include('partials/foot') %>
+

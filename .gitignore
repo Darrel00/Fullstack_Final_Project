@@ -1,0 +1,21 @@
+#
+# Root ignores (server + workspace)
+#
+
+# env / secrets
+.env
+
+# dependencies
+node_modules
+
+# editor / history
+.history
+.vscode
+
+# misc
+a.txt
+
+# server runtime data
+server/data
+server/public/uploads
+

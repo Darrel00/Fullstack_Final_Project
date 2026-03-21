@@ -1,0 +1,28 @@
+<%- include('partials/head', { title }) %>
+<%- include('partials/nav') %>
+
+<section class="page auth">
+  <div class="page__header">
+    <h1>Sign up</h1>
+    <p class="muted">Create an account to publish drawings.</p>
+  </div>
+
+  <form method="post" action="/auth/signup" class="card form">
+    <label>
+      <span>Email</span>
+      <input type="email" name="email" autocomplete="email" required />
+    </label>
+
+    <label>
+      <span>Password</span>
+      <input type="password" name="password" autocomplete="new-password" minlength="6" required />
+    </label>
+
+    <button type="submit" class="btn">Create account</button>
+
+    <p class="muted small">Already have an account? <a href="/auth/signin">Sign in</a>.</p>
+  </form>
+</section>
+
+<%- include('partials/foot') %>
+
