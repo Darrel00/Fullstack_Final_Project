@@ -17,7 +17,7 @@
 
 body {
   margin: 0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+  font-family: sans-serif, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
     "Segoe UI Emoji";
   background: var(--bg);
   color: var(--text);
@@ -97,6 +97,7 @@ a {
 }
 
 .btn {
+  margin: 10px 0px;
   padding: 10px 14px;
   border-radius: 12px;
   border: 1px solid rgba(139, 92, 246, 0.6);
@@ -230,6 +231,14 @@ canvas#drawing-board {
   border: 1px solid var(--border);
   background: rgba(0, 0, 0, 0.2);
   color: var(--text);
+}
+
+.publish__signin {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .grid {

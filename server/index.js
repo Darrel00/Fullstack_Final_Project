@@ -6,6 +6,7 @@ import express from 'express';
 import session from 'express-session';
 import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import { getSupabase, getGalleryBucket } from './supabase.js';
 
 dotenv.config();
 
@@ -136,13 +137,46 @@ app.post('/publish', requireAuth, async (req, res) => {
   const ext = extFromDataUrl(imageData);
   const id = randomUUID();
   const filename = `${id}.${ext}`;
-  const diskPath = path.join(uploadsDir, filename);
-  await fs.writeFile(diskPath, buf);
+  const contentType = ext === 'png' ? 'image/png' : 'image/jpeg';
+
+  const supabase = getSupabase();
+  if (!supabase) {
+    req.session.flash = {
+      type: 'error',
+      message: 'Gallery storage is not configured. Set SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY (or anon key + bucket policies) in .env.',
+    };
+    return res.redirect('/draw');
+  }
+
+  const bucket = getGalleryBucket();
+  const { error: uploadError } = await supabase.storage
+    .from(bucket)
+    .upload(filename, buf, { contentType, upsert: false });
+
+  if (uploadError) {
+    // eslint-disable-next-line no-console
+    console.error('Supabase storage upload:', uploadError);
+    req.session.flash = {
+      type: 'error',
+      message: 'Could not upload to gallery. Check the bucket name, policies, and API keys.',
+    };
+    return res.redirect('/draw');
+  }
+
+  const { data: publicData } = supabase.storage.from(bucket).getPublicUrl(filename);
+  const publicUrl = publicData?.publicUrl;
+  if (!publicUrl) {
+    req.session.flash = {
+      type: 'error',
+      message: 'Upload succeeded but public URL is missing. Mark the storage bucket as public in Supabase.',
+    };
+    return res.redirect('/draw');
+  }
 
   const record = {
     id,
     filename,
-    url: `/uploads/${filename}`,
+    url: publicUrl,
     caption,
     authorEmail: req.session.user.email,
     createdAt: new Date().toISOString(),
