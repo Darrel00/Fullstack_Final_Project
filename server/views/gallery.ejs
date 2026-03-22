@@ -25,6 +25,16 @@
               <span>·</span>
               <time datetime="<%= d.createdAt %>"><%= new Date(d.createdAt).toLocaleString() %></time>
             </div>
+            <% if (currentUser && String(currentUser.email || '').toLowerCase() === String(d.authorEmail || '').toLowerCase()) { %>
+              <form
+                method="post"
+                action="/gallery/<%= d.id %>/delete"
+                class="tile__delete"
+                onsubmit="return confirm('Delete this drawing from the gallery?');"
+              >
+                <button type="submit" class="btn btn--small btn--danger">Delete</button>
+              </form>
+            <% } %>
           </div>
         </article>
       <% }) %>

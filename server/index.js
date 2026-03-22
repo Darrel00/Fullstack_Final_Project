@@ -118,6 +118,38 @@ app.get('/gallery', async (req, res) => {
   res.render('gallery', { title: 'Gallery', drawings: ordered });
 });
 
+app.post('/gallery/:id/delete', requireAuth, async (req, res) => {
+  const id = String(req.params.id || '').trim();
+  const store = await readJson(DRAWINGS_PATH);
+  const idx = store.drawings.findIndex((d) => d.id === id);
+  if (idx === -1) {
+    req.session.flash = { type: 'error', message: 'Drawing not found.' };
+    return res.redirect('/gallery');
+  }
+
+  const drawing = store.drawings[idx];
+  if (safeEmail(drawing.authorEmail) !== safeEmail(req.session.user.email)) {
+    req.session.flash = { type: 'error', message: 'You can only delete your own drawings.' };
+    return res.redirect('/gallery');
+  }
+
+  store.drawings.splice(idx, 1);
+  await writeJson(DRAWINGS_PATH, store);
+
+  const url = String(drawing.url || '');
+  if (url.startsWith('/uploads/') && drawing.filename) {
+    const filePath = path.join(uploadsDir, path.basename(drawing.filename));
+    try {
+      await fs.unlink(filePath);
+    } catch {
+      // file may already be missing
+    }
+  }
+
+  req.session.flash = { type: 'success', message: 'Drawing removed from the gallery.' };
+  return res.redirect('/gallery');
+});
+
 app.post('/publish', requireAuth, async (req, res) => {
   const imageData = req.body?.imageData;
   const caption = String(req.body?.caption || '').trim().slice(0, 120);

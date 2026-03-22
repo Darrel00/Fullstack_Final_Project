@@ -108,6 +108,21 @@ a {
   background: rgba(139, 92, 246, 0.26);
 }
 
+.btn--small {
+  padding: 6px 10px;
+  font-size: 13px;
+  border-radius: 10px;
+}
+
+.btn--danger {
+  border-color: rgba(239, 68, 68, 0.55);
+  background: rgba(239, 68, 68, 0.14);
+}
+
+.btn--danger:hover {
+  background: rgba(239, 68, 68, 0.24);
+}
+
 .page__header h1 {
   margin: 0 0 6px;
   font-size: 34px;
@@ -267,6 +282,14 @@ canvas#drawing-board {
   gap: 8px;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.tile__delete {
+  margin-top: 10px;
+}
+
+.tile__delete button {
+  cursor: pointer;
 }
 
 .form {
