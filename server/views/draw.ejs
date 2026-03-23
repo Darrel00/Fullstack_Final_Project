@@ -17,6 +17,10 @@
         <button type="button" class="size-btn" data-size="poster">Poster</button>
         <button type="button" class="size-btn" data-size="banner">Banner</button>
       </div>
+      <p class="toolbar__note" id="sizeLockNote">Size locks after your first stroke.</p>
+
+      <button type="button" id="pick-bg">Background image</button>
+      <input id="bg-upload" type="file" accept="image/*" hidden />
 
       <label class="toolbar__label" for="stroke">Colour</label>
       <input id="stroke" name="stroke" type="color" value="#111827" />
@@ -33,8 +37,10 @@
     </div>
 
     <div class="board" id="board">
+      <canvas id="background-board" aria-hidden="true"></canvas>
       <canvas id="drawing-board"></canvas>
     </div>
+    <p class="muted small">Drag and drop an image onto the artboard to use it as a background.</p>
 
     <div class="publish">
       <% if (currentUser) { %>
