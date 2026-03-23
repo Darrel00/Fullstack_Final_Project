@@ -1,14 +1,22 @@
 (() => {
   const canvas = document.getElementById('drawing-board');
   const toolbar = document.getElementById('toolbar');
-  if (!canvas || !toolbar) return;
+  const board = document.getElementById('board');
+  if (!canvas || !toolbar || !board) return;
 
   const ctx = canvas.getContext('2d');
+  const sizeButtons = Array.from(toolbar.querySelectorAll('[data-size]'));
+  const sizePresets = {
+    postcard: { width: 6, height: 4, label: 'Postcard' },
+    poster: { width: 18, height: 24, label: 'Poster' },
+    banner: { width: 3, height: 1, label: 'Banner' },
+  };
 
   const state = {
     isPainting: false,
     lineWidth: 5,
     strokeStyle: '#111827',
+    boardSize: 'postcard',
   };
 
   function resizeCanvasToDisplaySize() {
@@ -32,6 +40,26 @@
 
   resizeCanvasToDisplaySize();
   window.addEventListener('resize', resizeCanvasToDisplaySize);
+
+  function setBoardSize(sizeKey) {
+    if (!sizePresets[sizeKey]) return;
+
+    state.boardSize = sizeKey;
+    const preset = sizePresets[sizeKey];
+    const ratio = `${preset.width} / ${preset.height}`;
+    board.style.aspectRatio = ratio;
+    board.setAttribute('aria-label', `${preset.label} artboard`);
+
+    sizeButtons.forEach((btn) => {
+      const isActive = btn.dataset.size === sizeKey;
+      btn.classList.toggle('is-active', isActive);
+      btn.setAttribute('aria-pressed', String(isActive));
+    });
+
+    resizeCanvasToDisplaySize();
+  }
+
+  setBoardSize(state.boardSize);
 
   function pointerPos(e) {
     const rect = canvas.getBoundingClientRect();
@@ -69,6 +97,12 @@
   // Toolbar controls
   toolbar.addEventListener('click', (e) => {
     const id = e.target?.id;
+    const size = e.target?.dataset?.size;
+
+    if (size) {
+      setBoardSize(size);
+    }
+
     if (id === 'clear') {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.beginPath();

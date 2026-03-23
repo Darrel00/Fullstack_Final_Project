@@ -196,6 +196,28 @@ a {
   color: var(--muted);
 }
 
+.size-picker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-right: 6px;
+  border-right: 1px solid var(--border);
+}
+
+.size-btn {
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.size-btn.is-active {
+  border-color: rgba(139, 92, 246, 0.7);
+  background: rgba(139, 92, 246, 0.28);
+}
+
 .toolbar input[type='color'],
 .toolbar select {
   height: 38px;
@@ -208,7 +230,8 @@ a {
 
 .board {
   margin-top: 14px;
-  height: 520px;
+  width: min(100%, 960px);
+  aspect-ratio: 3 / 2;
   border-radius: 16px;
   border: 1px solid var(--border);
   overflow: hidden;

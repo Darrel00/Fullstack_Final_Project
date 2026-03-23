@@ -11,6 +11,13 @@
     <div class="toolbar" id="toolbar">
       <button type="button" id="save">Save as image</button>
 
+      <div class="size-picker" role="group" aria-label="Artboard size presets">
+        <span class="toolbar__label">Artboard size</span>
+        <button type="button" class="size-btn is-active" data-size="postcard">Postcard</button>
+        <button type="button" class="size-btn" data-size="poster">Poster</button>
+        <button type="button" class="size-btn" data-size="banner">Banner</button>
+      </div>
+
       <label class="toolbar__label" for="stroke">Colour</label>
       <input id="stroke" name="stroke" type="color" value="#111827" />
 
@@ -25,7 +32,7 @@
       <button type="button" id="clear" class="danger">Clear</button>
     </div>
 
-    <div class="board">
+    <div class="board" id="board">
       <canvas id="drawing-board"></canvas>
     </div>
 
