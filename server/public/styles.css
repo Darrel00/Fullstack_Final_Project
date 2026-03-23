@@ -1,5 +1,6 @@
 :root {
   color-scheme: light;
+  --font-body: 'DotGothic16', Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   --primary: #07b9ce;
   --primary-hover: #7d2ae7;
   --surface-soft: #0f172a;
@@ -10,6 +11,8 @@
   --danger: #ef4444;
   --success: #16a34a;
   --canvas-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --tracking-base: 0.018em;
+  --grid-size: 34px;
 }
 
 * {
@@ -18,10 +21,31 @@
 
 body {
   margin: 0;
-  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-body);
+  font-kerning: normal;
+  font-feature-settings: 'kern' 1;
+  letter-spacing: var(--tracking-base);
+  line-height: 1.45;
   color: var(--text);
   background-color: var(--surface-soft);
-  background-image: linear-gradient(135deg, #0b1220 0%, #1e293b 100%);
+  background-image:
+    linear-gradient(135deg, #0b1220 0%, #1e293b 100%),
+    repeating-linear-gradient(
+      0deg,
+      rgba(125, 42, 231, 0.14) 0,
+      rgba(125, 42, 231, 0.14) 1px,
+      transparent 1px,
+      transparent var(--grid-size)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(7, 185, 206, 0.12) 0,
+      rgba(7, 185, 206, 0.12) 1px,
+      transparent 1px,
+      transparent var(--grid-size)
+    );
+  background-size: 100% 100%, var(--grid-size) var(--grid-size), var(--grid-size) var(--grid-size);
+  background-position: 0 0, 0 0, 0 0;
   min-height: 100vh;
 }
 
@@ -112,7 +136,8 @@ a {
 .page__header h1 {
   margin: 0 0 6px;
   font-size: 34px;
-  letter-spacing: -0.3px;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
 }
 
 .muted {
