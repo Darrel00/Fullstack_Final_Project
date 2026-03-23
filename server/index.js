@@ -15,8 +15,6 @@ const viewsDir = path.join(__dirname, 'views');
 const publicDir = path.join(__dirname, 'public');
 const dataDir = path.join(__dirname, 'data');
 const uploadsDir = path.join(publicDir, 'uploads');
-const DEFAULT_LOGO_SVG_PATH = '/Users/brunoamorim/Bcit 2026/FullStackCode_2026/curated logo /Untitled-1.svg';
-const BRAND_LOGO_PATH = process.env.CURATED_LOGO_PATH || DEFAULT_LOGO_SVG_PATH;
 
 const USERS_PATH = path.join(dataDir, 'users.json');
 const DRAWINGS_PATH = path.join(dataDir, 'drawings.json');
@@ -92,16 +90,6 @@ app.set('views', viewsDir);
 app.use(express.static(publicDir));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
 app.use(express.json({ limit: '15mb' }));
-
-app.get('/brand/logo.svg', async (_req, res) => {
-  try {
-    await fs.access(BRAND_LOGO_PATH);
-    res.setHeader('Cache-Control', 'public, max-age=300');
-    return res.sendFile(BRAND_LOGO_PATH);
-  } catch {
-    return res.status(404).type('text/plain').send('Brand logo not found.');
-  }
-});
 
 app.use(
   session({
